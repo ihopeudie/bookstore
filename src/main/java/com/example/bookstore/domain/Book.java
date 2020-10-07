@@ -1,15 +1,35 @@
 package com.example.bookstore.domain;
 
-public class Book {
-	private long id;
-	private String title;
-	private Author author;
+import javax.persistence.*;
 
-	public long getId() {
+@Entity
+@Table(name = "book")
+public class Book {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
+
+	@Column(name = "title")
+	private String title;
+
+	public Book() {
+	}
+
+	public Book(String title) {
+		this.title = title;
+	}
+
+	public Book(int id, String title) {
+		this.id = id;
+		this.title = title;
+	}
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -21,11 +41,11 @@ public class Book {
 		this.title = title;
 	}
 
-	public Author getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(Author author) {
-		this.author = author;
+	@Override
+	public String toString() {
+		return "Book{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				'}';
 	}
 }

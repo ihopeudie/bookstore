@@ -1,29 +1,34 @@
 package com.example.bookstore.controller;
 
 import com.example.bookstore.domain.Book;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.bookstore.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/book")
 public class BookController {
 
-	@GetMapping("/book")
-	public Book getBookById(@RequestParam(value = "id") long id) {
-		return new Book();
+	@Autowired
+	private BookRepository bookRepository;
+
+	@GetMapping("/{id}")
+	public Book getBookById(@PathVariable("id") Integer id) {
+		return bookRepository.findById(id).orElse(new Book());
 	}
 
-	@GetMapping("/book/list")
+	@GetMapping("list")
 	public List<Book> getAllBooks() {
-		List<Book> books = new ArrayList<>();
-		books.add(new Book());
-		books.add(new Book());
-		books.add(new Book());
-		books.add(new Book());
-		return books;
+		return (List<Book>) bookRepository.findAll();
 	}
+
+	@PostMapping("create")
+	public String createBook(@RequestParam String title) {
+		bookRepository.save(new Book(title));
+		return bookRepository.findByName(title) + " is saved";
+	}
+
 
 }
