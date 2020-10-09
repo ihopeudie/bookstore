@@ -1,3 +1,6 @@
+#bookStore test app
+##TASK
+
 Нужно реализовать REST-сервис для работы с библиотекой книжного 
 магазина. Должны присутствовать:
 
@@ -47,3 +50,13 @@ ORM: Hibernate
 Валидация: Bean validation (в реализации Hibernate)
 
 Библиотека логирования: Logback или log4j
+
+
+##DOCS
+________
+
+###Installation
+`mvn clean:clean`
+run BookstoreApplication.main
+Init database: `mvn liquibase:update`
+reset changelog hashsumms: `mvn liquibase:clearCheckSums`
